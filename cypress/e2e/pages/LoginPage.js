@@ -1,29 +1,36 @@
-class LoginPage{
+class LoginPage {
+    // Define elements
     elements = {
-        usernameInput: ()=> cy.get('#user-name'),
-        passwordInput: ()=> cy.get('#password'),
-        loginButton: ()=> cy.get('#login-button'),
-        errorMessage: () => cy.get('[data-test="error"]')
-    }
+      usernameInput: () => cy.get('#user-name'),
+      passwordInput: () => cy.get('#password'),
+      loginButton: () => cy.get('#login-button'),
+      errorMessage: () => cy.get('[data-test="error"]')
+    };
+  
+    // Define actions
     visit() {
-        cy.visit('https://www.saucedemo.com/');
+      cy.visit('https://www.saucedemo.com/');
     }
-    typeUsername(username){
+  
+    typeUsername(username) {
+      if (username) {
         this.elements.usernameInput().type(username);
+      }
     }
-    typePassword(password){
+  
+    typePassword(password) {
+      if (password) {
         this.elements.passwordInput().type(password);
+      }
     }
-    clickLoginButton(){
-        this.elements.loginButton().click();
+  
+    clickLoginButton() {
+      this.elements.loginButton().click();
     }
-    verifyErrorMessage(message){
-        this.elements.errorMessage().should('have.text',message);
+  
+    verifyErrorMessage(message) {
+      this.elements.errorMessage().should('have.text', message);
     }
-    verifySuccessfulLogin(){
-        cy.url().should('include','inventory.html');
-        cy.get('.title').should('have.text', 'Products');
-    }
-}
-
-export default LoginPage;
+  }
+  
+  export default LoginPage;

@@ -1,0 +1,44 @@
+[
+    {
+        "username": "standard_user",
+        "password": "secret_sauce",
+        "valid": true,
+        "errorMessage": ""
+    },
+    {
+        "username": "locked_out_user",
+        "password": "secret_sauce",
+        "valid": false,
+        "errorMessage": "Epic sadface: Sorry, this user has been locked out."
+    },
+    {
+        "username": "problem_user",
+        "password": "secret_sauce",
+        "valid": true,
+        "errorMessage": ""
+    },
+    {
+        "username": "performance_glitch_user",
+        "password": "secret_sauce",
+        "valid": true,
+        "errorMessage": ""
+    },
+    {
+        "username": "invalid_user",
+        "password": "invalid_password",
+        "valid": false,
+        "errorMessage": "Epic sadface: Username and password do not match any user in this service"
+    },
+    {
+        "username": "",
+        "password": "secret_sauce",
+        "valid": false,
+        "errorMessage": "Epic sadface: Username is required"
+    },
+    {
+        "username": "standard_user",
+        "password": "",
+        "valid": false,
+        "errorMessage": "Epic sadface: Password is required"
+    }
+]
