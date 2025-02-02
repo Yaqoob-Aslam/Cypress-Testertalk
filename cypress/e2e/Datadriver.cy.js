@@ -15,6 +15,15 @@ describe('Data-Driven Login Tests on Sauce Demo', () => {
           // Click the login button
           cy.get('#login-button').click();
 
+          // Verify the expected result
+        if (data.expectedResult === 'success') {
+            // If login is successful, verify the inventory page is displayed
+            cy.url().should('include', '/inventory.html');
+            cy.get('.title').should('have.text', 'Products');
+        } else {
+            // If login fails, verify the error message
+            cy.get('[data-test="error"]').should('have.text', data.expectedResult);
+        }
         });
     });
 });
