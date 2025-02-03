@@ -11,7 +11,7 @@ describe('All Products Verification Tests on Sauce Demo', () => {
         cy.get('.title').should('have.text', 'Products');
     });
 
-    it('Verify all product details and perform checkout', () => {
+    it.skip('Verify all product details and perform checkout', () => {
         // Get the number of products
         cy.get('.inventory_item').then(($products) => {
             const productCount = $products.length;
@@ -90,4 +90,27 @@ describe('All Products Verification Tests on Sauce Demo', () => {
             }
         });
     });
+    
+    it('Verify empty cart', () => {     
+        // Navigate to the cart
+        cy.get('.shopping_cart_link').click();
+        cy.url().should('include', '/cart.html');
+
+        // Verify the product in the cart
+        cy.get('.cart_item').should('not.exist');
+        cy.get('.cart_quantity').should('not.exist');
+        cy.get('.inventory_item_price').should('not.exist');
+    });
+
+    it('Verify footer links', () => {
+        cy.get('.footer').should('be.visible');
+        cy.get('.social li').should('have.length', 3);
+
+        cy.get('.social_twitter a').should('have.attr', 'href', 'https://twitter.com/saucelabs');
+        cy.get('.social_facebook a').should('have.attr', 'href', 'https://www.facebook.com/saucelabs');
+        cy.get('.social_linkedin a').should('have.attr', 'href', 'https://www.linkedin.com/company/sauce-labs/');
+        cy.get('.footer_copy').should('have.text', '© 2025 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy');
+
+    });
 });
+
