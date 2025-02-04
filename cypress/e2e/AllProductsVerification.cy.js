@@ -102,6 +102,15 @@ describe('All Products Verification Tests on Sauce Demo', () => {
         cy.get('.inventory_item_price').should('not.exist');
     });
 
+    it('Verify menu links', () => {
+        cy.get('.bm-burger-button').click();
+        cy.get('#inventory_sidebar_link').should('have.text', 'All Items');
+        cy.get('#about_sidebar_link').should('have.text', 'About');
+        cy.get('#logout_sidebar_link').should('have.text', 'Logout');
+        cy.get('#reset_sidebar_link').should('have.text', 'Reset App State');
+        cy.get('#react-burger-cross-btn').click();
+    });
+
     it('Verify footer links', () => {
         cy.get('.footer').should('be.visible');
         cy.get('.social li').should('have.length', 3);
@@ -110,7 +119,5 @@ describe('All Products Verification Tests on Sauce Demo', () => {
         cy.get('.social_facebook a').should('have.attr', 'href', 'https://www.facebook.com/saucelabs');
         cy.get('.social_linkedin a').should('have.attr', 'href', 'https://www.linkedin.com/company/sauce-labs/');
         cy.get('.footer_copy').should('have.text', '© 2025 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy');
-
     });
 });
-
