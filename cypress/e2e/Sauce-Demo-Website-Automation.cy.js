@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe('All Products Verification Tests on Sauce Demo', () => {
+describe('Complete Sauce Demo Website Automation', () => {
     beforeEach(() => {
         // Visit the Sauce Demo website and log in
         cy.visit('https://www.saucedemo.com/');
@@ -11,7 +11,7 @@ describe('All Products Verification Tests on Sauce Demo', () => {
         cy.get('.title').should('have.text', 'Products');
     });
 
-    it.skip('Verify all product details and perform checkout', () => {
+    it('Verify all product with details and perform checkout', () => {
         // Get the number of products
         cy.get('.inventory_item').then(($products) => {
             const productCount = $products.length;
@@ -111,6 +111,83 @@ describe('All Products Verification Tests on Sauce Demo', () => {
         cy.get('#react-burger-cross-btn').click();
     });
 
+    it('Verify sort functionality (A to Z)', () => {
+        const expectedProducts = [
+            'Sauce Labs Backpack',
+            'Sauce Labs Bike Light',
+            'Sauce Labs Bolt T-Shirt',
+            'Sauce Labs Fleece Jacket',
+            'Sauce Labs Onesie',
+            'Test.allTheThings() T-Shirt (Red)'
+        ];
+    
+        // Sort products by A to Z
+        cy.get('.product_sort_container').select('az');
+    
+        // Verify sorted product names
+        cy.get('.inventory_item_name').each(($el, index) => {
+            cy.log($el);
+
+            cy.wrap($el).should('have.text', expectedProducts[index]);
+        });
+    });
+    
+    it('Verify sort functionality (Z to A)', () => {
+        const expectedProducts =[
+            'Test.allTheThings() T-Shirt (Red)',
+            'Sauce Labs Onesie',
+            'Sauce Labs Fleece Jacket',
+            'Sauce Labs Bolt T-Shirt',
+            'Sauce Labs Bike Light',
+            'Sauce Labs Backpack',
+        ];
+
+        // Sort products by Z to A
+        cy.get('.product_sort_container').select('za');
+
+
+        // Verify sorted product names});
+        cy.get('.inventory_item_name').each(($el, index) =>{
+            cy.wrap($el).should('have.text', expectedProducts[index]);
+        })
+    });
+
+    it('Verify sort functionality (Low to High)', () => {
+        // Sort products by Low to High
+        cy.get('.product_sort_container').select('lohi');
+    
+        // Collect all prices into an array
+        const prices = [];
+        cy.get('.inventory_item_price').each(($el) => {
+            const price = parseFloat($el.text().replace('$', ''));
+            prices.push(price);
+        }).then(() => {
+            // Verify that prices are sorted in ascending order
+            for (let i = 0; i < prices.length - 1; i++) {
+                expect(prices[i]).to.be.at.most(prices[i + 1]);
+            }
+        });
+    });
+
+    it('Verify sort functionality (High to Low)', () => {
+        
+         // Sort products by Hight to Low
+         cy.get('.product_sort_container').select('hilo');
+
+            // Collect all prices into an array
+            const prices = [];
+            cy.get('.inventory_item_price').each(($el)=>{
+                const price = parseFloat($el.text().replace('$', ''));
+                prices.push(price);
+            }).then(()=>{
+                // Verify that prices are sorted in descending order
+                for(let i =0; i< prices.length -1; i++){
+                    expect(prices[i]).to.be.at.least(prices[i+1])
+                }
+            })
+        })
+   
+
     it('Verify footer links', () => {
         cy.get('.footer').should('be.visible');
         cy.get('.social li').should('have.length', 3);
@@ -120,4 +197,5 @@ describe('All Products Verification Tests on Sauce Demo', () => {
         cy.get('.social_linkedin a').should('have.attr', 'href', 'https://www.linkedin.com/company/sauce-labs/');
         cy.get('.footer_copy').should('have.text', '© 2025 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy');
     });
+ 
 });
